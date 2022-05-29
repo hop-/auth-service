@@ -21,7 +21,7 @@ export class UsersService {
   public async findOne(email: string, password: string): Promise<User | null> {
     const user: User = await this.usersRepository.findOne({
       where: { email },
-      select: ['email', 'password'],
+      select: ['uuid', 'email', 'password'],
     });
 
     if (user && (await bcrypt.compare(password, user.password))) {
