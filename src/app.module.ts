@@ -17,7 +17,6 @@ import { User } from './users/user.entity';
       load: [configuration],
     }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
         host: config.get('db.host'),
@@ -26,6 +25,8 @@ import { User } from './users/user.entity';
         password: config.get('db.password'),
         database: config.get('db.database'),
         entities: [User],
+        migrations: ['dist/migrations/*.{ts,js}'],
+        migrationsRun: true,
         synchronize: true,
       }),
       inject: [ConfigService],
